@@ -1,9 +1,17 @@
 package com.quipux.test.dto;
 
+import com.quipux.test.entities.Cancion;
+import jakarta.validation.constraints.NotBlank;
+
 public record CancionDTO(
-		String titulo,
-		String artista,
+		@NotBlank String titulo,
+		@NotBlank String artista,
 		String album,
-		String anno,
+		int anno,
 		String genero
-		) {}
+		) {
+
+	public CancionDTO(Cancion cancion) {
+		this(cancion.getTitulo(), cancion.getArtista(), cancion.getAlbum(), cancion.getAnno(), cancion.getGenero());
+	}
+}

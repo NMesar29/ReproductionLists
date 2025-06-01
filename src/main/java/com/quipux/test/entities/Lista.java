@@ -3,6 +3,8 @@ package com.quipux.test.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.quipux.test.dto.ListaDTO;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,17 +29,30 @@ public class Lista {
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Cancion> canciones;
 	
+	@Column(unique=true, nullable=false)
+	private String slug;
+	
 	public Lista() {
 		this.canciones = new ArrayList<>();
 	}
 	
 	
+	public Lista(ListaDTO listaDTO) {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getSlug() {
+		return slug;
+	}
+	public void setSlug(String slug) {
+		this.slug = slug;
 	}
 	public String getNombre() {
 		return nombre;

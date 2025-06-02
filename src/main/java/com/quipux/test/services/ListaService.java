@@ -1,7 +1,6 @@
 package com.quipux.test.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -10,8 +9,6 @@ import com.quipux.test.entities.Cancion;
 import com.quipux.test.entities.Lista;
 import com.quipux.test.repository.CancionRepository;
 import com.quipux.test.repository.ListaRepository;
-
-import jakarta.validation.constraints.NotBlank;
 
 @Service
 public class ListaService {
@@ -60,10 +57,6 @@ public class ListaService {
 	    return listaRepository.findByNombreIgnoreCase(nombre).isPresent();
 	}
 	
-	public Optional<Lista> getListaByNombre(String nombre){
-		return listaRepository.findByNombreIgnoreCase(nombre);
-	}
-
 	public void deleteListaBySlug(String listName) {
 		Lista lista = getListaBySlug(listName);
         listaRepository.delete(lista);

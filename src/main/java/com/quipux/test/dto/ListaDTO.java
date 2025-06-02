@@ -6,7 +6,8 @@ import jakarta.validation.Valid;
 import com.quipux.test.entities.Lista;
 
 public record ListaDTO(
-		@NotBlank String nombre,
+		@NotBlank(message = "El nombre no puede estar vacío")
+		String nombre,
 		String descripcion,
 		@Valid List<CancionDTO> canciones
 		) {

@@ -1,14 +1,11 @@
 package com.quipux.test.controller;
 
 import java.net.URI;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +18,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.quipux.test.dto.ListaDTO;
 import com.quipux.test.entities.Lista;
-import com.quipux.test.repository.ListaRepository;
 import com.quipux.test.services.ListaService;
 
 import jakarta.validation.Valid;
@@ -60,10 +56,10 @@ public class ListReproductionController {
 			Lista nuevaLista = listaService.createNewList(listaDTO);
 			URI location = uriBuilder.path("/lists/{nombre}").buildAndExpand(nuevaLista.getSlug()).toUri();
 			return ResponseEntity.created(location).body(new ListaDTO(nuevaLista));
-		} catch (IllegalArgumentException e) {
+		} catch (Exception e) {
 			Map<String,String> errorResponse = new HashMap<>();
 			errorResponse.put("error", e.getMessage());
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
 		}
 	}
 	

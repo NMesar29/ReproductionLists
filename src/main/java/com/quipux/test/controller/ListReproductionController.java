@@ -3,7 +3,9 @@ package com.quipux.test.controller;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -45,7 +47,9 @@ public class ListReproductionController {
 			Lista lista = listaService.getListaBySlug(listName);
 			return ResponseEntity.ok(new ListaDTO(lista));
 		}catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+			Map<String,String> errorResponse = new HashMap<>();
+			errorResponse.put("error", e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
 		}
 
 	}
@@ -57,7 +61,9 @@ public class ListReproductionController {
 			URI location = uriBuilder.path("/lists/{nombre}").buildAndExpand(nuevaLista.getSlug()).toUri();
 			return ResponseEntity.created(location).body(new ListaDTO(nuevaLista));
 		} catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+			Map<String,String> errorResponse = new HashMap<>();
+			errorResponse.put("error", e.getMessage());
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
 		}
 	}
 	
@@ -67,7 +73,9 @@ public class ListReproductionController {
 			listaService.deleteListaBySlug(listName);
 			return ResponseEntity.noContent().build();
 		}catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+			Map<String,String> errorResponse = new HashMap<>();
+			errorResponse.put("error", e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
 		}
 	}
 
